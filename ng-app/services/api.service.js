@@ -16,7 +16,7 @@ angular.module('easishare-plugin').service("APIService", ["$http", function($htt
     let makeRequest = function(method, endPoint, data, headers){
         let requestConfig = {
             method: method,
-            endPoint: getEndPoint(endPoint)
+            url: getEndPoint(endPoint)
         }
 
         if(requestConfig.data){
