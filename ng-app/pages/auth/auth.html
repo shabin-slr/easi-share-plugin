@@ -1,10 +1,30 @@
-<div>
-    <p>AUTH PAGE</p>
-    
-    User Name <input type="text" ng-model="$ctrl.userName"/>
-    <br/>
-    Password  <input type="text" ng-model="$ctrl.password"/>
-
-    <button ng-click="$ctrl.doLogin()">Login</button>
-
+<div class="container-wrapper">
+    <div class="container">
+        <section class="brand-box">
+            <div class="brand">
+                <span class="brand-helper"></span>
+                <img src="./images/logo.png" alt="">
+                
+            </div>
+        </section>
+        <section class="login-box">
+            <form action="https://demo2.easishare.com/web/Login/Login" autocomplete="off" class="common-form" data-autoclear="5" id="LoginForm" method="post" novalidate="novalidate"> 
+                <p>
+                    Login to your User Account here
+                </p>
+                <div class="form-group">
+                    <label for="Username">Username</label>
+                    <input class="form-control" data-val="true" data-val-required="The Username field is required." id="Username" name="Username" type="text" value="">
+                </div>
+                <div class="form-group">
+                    <label for="Password">Password</label>
+                    <input class="form-control" data-val="true" data-val-required="The Password field is required." id="Password" name="Password" type="password">
+                </div>
+                <button type="submit" id="loginSubmit" onclick="return LoginSubmit();" data-loading-msg="Authenticating. Please wait..." class="btn btn-primary btn-block">
+                    Login
+                </button>
+            </form>
+            <div class="powered-by">Powered by <a class="link" href="http://easishare.com/" target="_blank">EasiShare</a></div>
+        </section>
+    </div>
 </div>
