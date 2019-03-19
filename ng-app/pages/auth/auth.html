@@ -14,13 +14,13 @@
                 </p>
                 <div class="form-group">
                     <label for="Username">Username</label>
-                    <input class="form-control" data-val="true" data-val-required="The Username field is required." id="Username" name="Username" type="text" value="">
+                    <input id="Username" ng-model="$ctrl.userName" class="form-control" data-val-required="The Username field is required." name="Username" type="text">
                 </div>
                 <div class="form-group">
                     <label for="Password">Password</label>
-                    <input class="form-control" data-val="true" data-val-required="The Password field is required." id="Password" name="Password" type="password">
+                    <input id="Password" ng-model="$ctrl.password" class="form-control" data-val-required="The Password field is required." name="Password" type="password">
                 </div>
-                <button type="submit" id="loginSubmit" onclick="return LoginSubmit();" data-loading-msg="Authenticating. Please wait..." class="btn btn-primary btn-block">
+                <button type="submit" id="loginSubmit" ng-click="$ctrl.doLogin()" data-loading-msg="Authenticating. Please wait..." class="btn btn-primary btn-block">
                     Login
                 </button>
             </form>
