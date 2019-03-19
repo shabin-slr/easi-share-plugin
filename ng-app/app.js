@@ -22,5 +22,3 @@ angular.module('easishare-plugin').config(function($routeProvider) {
         controllerAs: "$ctrl"
     })
 });
-
-
