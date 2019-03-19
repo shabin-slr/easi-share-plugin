@@ -13,11 +13,13 @@ angular.module('easishare-plugin').config(function($routeProvider) {
     $routeProvider
     .when("/", {
         templateUrl: "./ng-app/pages/auth/auth.html",
-        controller: "authController"
+        controller: "authController",
+        controllerAs: "$ctrl"
     })
     .when("/files", {
         templateUrl: "./ng-app/pages/files/files.html",
-        controller: "filesController"
+        controller: "filesController",
+        controllerAs: "$ctrl"
     })
 });
 
