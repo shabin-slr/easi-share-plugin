@@ -2,9 +2,9 @@ angular.module('easishare-plugin').service("APIService", ["$http", function($htt
     var self = this;
     
     self.login = function(userName, password){
-        return makeRequest(
+        return makeRestRequest(
             "POST",
-            END_POINTS.LOGIN,
+            REST_END_POINTS.LOGIN,
             {
                 "UserName": userName,
                 "UserPassword": password,
@@ -13,7 +13,7 @@ angular.module('easishare-plugin').service("APIService", ["$http", function($htt
         );
     };
 
-    let makeRequest = function(method, endPoint, data, headers){
+    let makeRestRequest = function(method, endPoint, data, headers){
         let requestConfig = {
             method: method,
             url: getEndPoint(endPoint)
@@ -39,3 +39,7 @@ angular.module('easishare-plugin').service("APIService", ["$http", function($htt
         return url;
     }
 }]);
+
+angular.module('easishare-plugin').service("SOAPService", ["$soap", function($soap){
+    $soa
+}])

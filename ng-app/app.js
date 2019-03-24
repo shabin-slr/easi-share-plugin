@@ -1,4 +1,4 @@
-angular.module('easishare-plugin',['ngRoute']);
+angular.module('easishare-plugin',['ngRoute', 'angularSoap']);
 
 angular.module('easishare-plugin').controller("AppController", ["APIService", function(APIService){
     let checkAuth = function(){
