@@ -1,8 +1,9 @@
-angular.module('easishare-plugin').controller("authController", ["APIService", function(APIService){
+angular.module('easishare-plugin').controller("authController", ["APIService", "$q", function(APIService,$q){
     console.log("Auth Controller loaded");
     var $ctrl = this;
     
     $ctrl.doLogin = function(){
+        
         APIService.login($ctrl.userName, $ctrl.password)
         .then(function(data){
             console.log(data);
