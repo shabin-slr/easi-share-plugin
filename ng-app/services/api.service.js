@@ -71,11 +71,11 @@ angular.module('easishare-plugin').service("APIService", ["$http", "$soap", func
             url: getRestEndPoint(endPoint)
         }
 
-        if(requestConfig.data){
+        if(data){
             requestConfig.data = data;
         };
 
-        if(requestConfig.headers){
+        if(headers){
             requestConfig.headers = headers;
         };
 
