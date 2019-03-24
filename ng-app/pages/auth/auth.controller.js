@@ -1,4 +1,4 @@
-angular.module('easishare-plugin').controller("authController", ["APIService", "$q", function(APIService,$q){
+angular.module('easishare-plugin').controller("authController", ["APIService", "AuthService", "$q", function(APIService,AuthService,$q){
     console.log("Auth Controller loaded");
     var $ctrl = this;
     
