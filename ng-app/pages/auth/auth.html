@@ -1,4 +1,4 @@
-<div class="container-wrapper">
+<!-- <div class="container-wrapper">
     <div class="container">
         <section class="brand-box">
             <div class="brand">
@@ -7,24 +7,24 @@
                 
             </div>
         </section>
-        <section class="login-box">
-            <form autocomplete="off" class="common-form" data-autoclear="5" id="LoginForm" method="post" novalidate="novalidate"> 
-                <p>
-                    Login to your User Account here
-                </p>
-                <div class="form-group">
-                    <label for="Username">Username</label>
-                    <input id="Username" ng-model="$ctrl.userName" class="form-control" data-val-required="The Username field is required." name="Username" type="text">
-                </div>
-                <div class="form-group">
-                    <label for="Password">Password</label>
-                    <input id="Password" ng-model="$ctrl.password" class="form-control" data-val-required="The Password field is required." name="Password" type="password">
-                </div>
-                <button type="submit" id="loginSubmit" ng-click="$ctrl.doLogin()" data-loading-msg="Authenticating. Please wait..." class="btn btn-primary btn-block">
-                    Login
-                </button>
-            </form>
-            <div class="powered-by">Powered by <a class="link" href="http://easishare.com/" target="_blank">EasiShare</a></div>
-        </section>
     </div>
-</div>
+</div> -->
+<section class="login-box">
+    <form autocomplete="off" class="common-form" data-autoclear="5" id="LoginForm" method="post" novalidate="novalidate"> 
+        <!-- <p>
+            Login to your User Account here
+        </p> -->
+        <div class="form-group">
+            <label for="Username">Username</label>
+            <input id="Username" ng-model="$ctrl.userName" class="form-control" data-val-required="The Username field is required." name="Username" type="text">
+        </div>
+        <div class="form-group">
+            <label for="Password">Password</label>
+            <input id="Password" ng-model="$ctrl.password" class="form-control" data-val-required="The Password field is required." name="Password" type="password">
+        </div>
+        <button type="submit" id="loginSubmit" ng-click="$ctrl.doLogin()" data-loading-msg="Authenticating. Please wait..." class="btn btn-primary btn-block">
+            Login
+        </button>
+    </form>
+    <div class="powered-by">Powered by <a class="link" href="http://easishare.com/" target="_blank">EasiShare</a></div>
+</section>

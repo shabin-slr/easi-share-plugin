@@ -23,7 +23,8 @@ angular.module('easishare-plugin').service("APIService", ["$http", "$soap", func
                     "DeviceID" : APP_CONFIG.soap.deviceID,
                     "DeviceType": APP_CONFIG.soap.deviceType,
                     "AppVersion" : APP_CONFIG.soap.appVersion,
-                    "HTTPResponseType": "XML"
+                    "HTTPResponseType": "XML",
+                    "LogoutFromAllDevices": true
                 }
             }
         );
@@ -47,7 +48,7 @@ angular.module('easishare-plugin').service("APIService", ["$http", "$soap", func
             "Login",{
                 "ESToken": esToken,
                 "Options": {
-                    "StorageID": APP_CONFIG.soap.storageId
+                    "StorageId": APP_CONFIG.soap.storageId
                 }
             }
         );

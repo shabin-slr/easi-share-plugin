@@ -3,24 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Easishare Plugin</title>
     <link href="https://demo2.easishare.com/web/favicon.ico?v=8.1.0" rel="shortcut icon" type="image/x-icon">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <link rel="stylesheet" href="./css/login.css">
     <link rel="stylesheet" href="./css/shared.css">
     <link rel="stylesheet" href="./css/teal.css">
 </head>
-<body ng-controller="AppController as $mainCtrl">
-    <div class="ng-view"></div>
-</body>
-<script src="./config.js"></script>
-<script src="./libraries/angular.min.js"></script>
-<script src="./libraries/angular-route.min.js"></script>
-<script src="./libraries/soapClient.js"></script>
-<script src="./libraries/angular-soap.js"></script>
-<script src="./ng-app/app.js"></script>
-<script src="./ng-app/services/auth.service.js"></script>
-<script src="./ng-app/services/api.service.js"></script>
-<script src="./ng-app/pages/auth/auth.controller.js"></script>
-<script src="./ng-app/pages/files/files.controller.js"></script>
-</html>
+<body ng-controller="AppController as $mainCtrl" class="teal">
+    <!-- <div class="container-wrapper"> --><!-- </div> -->
+    <!-- <div class="container">
+        <header id="header">
+            <div class="header-line"></div>
+            <section class="brand-box">
+                <div class="brand">
+                    <span class="brand-helper"></span>
+                    <img src="./images/logo.png" alt="">
+                </div>
+            </section>
+            
+        </div> -->
+
+    <div class="container">
+        <header id="header">
+            <div class="header-line"></div>
+            <div class="header-menu">
+                <div class="left-side header-logo">
+                    <img src="./images/logo.png" alt="">
+                </div>
+            </div>
+        </header>
+        <div class="main">
+            <div class="ng-view"></div>
+        </div>
+    </div>
+        
+    </body>
+    <script src="./config.js"></script>
+    <script src="./libraries/angular.min.js"></script>
+    <script src="./libraries/angular-route.min.js"></script>
+    <script src="./libraries/soapClient.js"></script>
+    <script src="./libraries/angular-soap.js"></script>
+    <script src="./ng-app/app.js"></script>
+    <script src="./ng-app/services/auth.service.js"></script>
+    <script src="./ng-app/services/api.service.js"></script>
+    <script src="./ng-app/pages/auth/auth.controller.js"></script>
+    <script src="./ng-app/pages/files/files.controller.js"></script>
+    </html>

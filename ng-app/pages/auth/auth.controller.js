@@ -15,18 +15,22 @@ angular.module('easishare-plugin').controller("authController", ["APIService", "
         })
         .then(()=>shareLogin($ctrl.userName, $ctrl.password))
         .then(data=>{
-            let shareToken = data;
-            if(!shareToken || typeof(data)!="string"){
+            let shareToken = data.Result;
+            if(!shareToken || typeof(shareToken)!="string"){
                 throw "Invalid Login";
             }
             AuthService.setShareToken(shareToken);
+            return shareToken;
         })
-        .then(updateShareToken(AuthService.getShareToken())
-        ).then(()=>{
+        .then(()=>{
+            return updateShareToken(AuthService.getShareToken())
+        })
+        .then((data)=>{
+            console.log(data);
             storageLogin(AuthService.getShareToken())
             .then(data=>{
                 let storageToken = data.Result;
-                if(!shareToken){
+                if(!storageToken){
                     throw "Invalid Login";
                 }
                 AuthService.setStorageToken(storageToken);
