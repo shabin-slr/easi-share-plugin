@@ -41,13 +41,13 @@ angular.module('easishare-plugin').service("APIService", ["$http", "$soap", func
         );
     };
 
-    self.storageLogin = function(esToken, storageId){
+    self.storageLogin = function(esToken){
         return makeSoapRequest(
             SOAP_END_POINTS.STORAGE,
             "Login",{
                 "ESToken": esToken,
                 "Options": {
-                    "StorageID": storageId
+                    "StorageID": APP_CONFIG.soap.storageId
                 }
             }
         );
@@ -100,7 +100,7 @@ angular.module('easishare-plugin').service("APIService", ["$http", "$soap", func
         if(APP_CONFIG.useCORSProxy){
             url = APP_CONFIG.proxyUrl;
         };
-        url += APP_CONFIG.apiBaseUrl + api;
+        url += APP_CONFIG.soap.soapBaseUrl + api;
         return url;
     }
 
