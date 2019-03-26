@@ -239,6 +239,16 @@ SOAPClient._node2object = function(node, wsdlTypes)
 		return SOAPClient._node2object(node.childNodes[0], wsdlTypes);
 	var isarray = SOAPClient._getTypeFromWsdl(node.nodeName, wsdlTypes).toLowerCase().indexOf("arrayof") != -1;
 	// object node
+	if(!isarray && node.children.length){
+		var allSame = true;
+		var firstNodeName = node.children[0].tagName;
+		for(var i = 1; i < node.children.length; ++i){
+			if(node.children[i].tagName != firstNodeName){
+				allSame = false; break;
+			}
+		}
+		isarray = allSame;
+	}
 	if(!isarray)
 	{
 		var obj = null;
