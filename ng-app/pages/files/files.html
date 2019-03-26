@@ -2,7 +2,16 @@
     
 </div> -->
 
-
+<section class="section">
+    <div class="header-menu">
+        <ol class="breadcrumb">
+            <li><a class="pointer" ng-click="$ctrl.gotToPath(-1)">WorkDrive</a></li>
+            <li ng-repeat="path in $ctrl.folderStack">
+                <a class="pointer" ng-click="$ctrl.gotToPath($index)">{{path}}</a>
+            </li>
+        </ol>
+    </div>
+</section>
 <section class="section">
     <table role="grid" class="table table-responsive table-striped">
         <thead>
@@ -43,7 +52,7 @@
         </thead>
         <tbody style="width: 697px;">
 
-            <tr data-uid="904b7049-2507-4882-b619-0893871f4831" role="row" class="k-state-selected">
+            <tr ng-repeat="file in $ctrl.files" ng-class="{ 'k-state-selected':file.isSelected}">
                 
                 <td class="grid-select-col" role="gridcell">
                     <i class="fa fa-check fa-grid-select">
@@ -51,23 +60,21 @@
                 </td>
                 <td class="closer-left" role="gridcell">
                     <span title="">
-                        <i class="fa fa-folder-o fa-lg">
+                        <i class="fa fa-lg" ng-class="{'fa-folder-o': file.isDirectory, 'fa-file-image-o': !file.isDirectory}">
                         </i>
                         <i class="">
                         </i>
                         <i class="fa fa-lock ">
                         </i>
                     </span>
-                    <a class="item-name" href="#">Test Folder 1</a>
+                    <a class="item-name" ng-click="$ctrl.goToDirectory(file)" ng-class="{'pointer': file.isDirectory}">{{file.fileName}}</a>
                 </td>
-                <td role="gridcell">03/25/2019 4:45 PM</td>
-                <td role="gridcell">
-                </td>
-                <td role="gridcell">
-                </td>
+                <td role="gridcell">{{file.lastModificationTime| date : "MM/dd/yyyy h:mm a"}}</td>
+                <td role="gridcell">{{$ctrl.getFileType(file)}}</td>
+                <td role="gridcell">{{$ctrl.getFileSize(file.fileSize)}}</td>
             </tr>
 
-            <tr data-uid="8e054c1a-b4ef-495e-bc62-1d7f0c8215b8" role="row">
+            <!-- <tr data-uid="8e054c1a-b4ef-495e-bc62-1d7f0c8215b8" role="row">
                 
                 <td class="grid-select-col" role="gridcell">
                     <i class="fa fa-check fa-grid-select">
@@ -87,7 +94,7 @@
                 <td role="gridcell">03/19/2019 6:10 AM</td>
                 <td role="gridcell">png</td>
                 <td role="gridcell" title="116.7 KB">116.7 KB</td>
-            </tr>
+            </tr> -->
         </tbody>
     </table>
 </section>

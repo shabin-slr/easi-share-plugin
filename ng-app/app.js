@@ -1,11 +1,19 @@
 angular.module('easishare-plugin',['ngRoute', 'angularSoap']);
 
-angular.module('easishare-plugin').controller("AppController", ["APIService", function(APIService){
+angular.module('easishare-plugin').controller("AppController", ["$scope", "APIService", function($scope, APIService){
+    var $mainCtrl = this;
     let checkAuth = function(){
         // check if logged in
         // if not, redirect to login page
     };
     checkAuth();
+
+    $scope.$on("ShowLoader", function(){
+        $mainCtrl.showLoader = true;
+    });
+    $scope.$on("HideLoader", function(){
+        $mainCtrl.showLoader = false;
+    });
 }]);
 
 

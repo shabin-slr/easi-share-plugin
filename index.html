@@ -13,19 +13,10 @@
     <link rel="stylesheet" href="./css/teal.css">
 </head>
 <body ng-controller="AppController as $mainCtrl" class="teal">
-    <!-- <div class="container-wrapper"> --><!-- </div> -->
-    <!-- <div class="container">
-        <header id="header">
-            <div class="header-line"></div>
-            <section class="brand-box">
-                <div class="brand">
-                    <span class="brand-helper"></span>
-                    <img src="./images/logo.png" alt="">
-                </div>
-            </section>
-            
-        </div> -->
 
+    <div class="loader" ng-show="$mainCtrl.showLoader">
+            <i class="fa fa-spinner fa-spin" style="font-size:36px;color: black;top: 50%;"></i>
+    </div>
     <div class="container">
         <header id="header">
             <div class="header-line"></div>

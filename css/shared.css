@@ -12678,7 +12678,7 @@ ul.tree i.shared-folder {
 .header-menu .header-logo {
     border-right: 1px solid #d8d8d8;
     height: 100%;
-    padding-top: 16px;
+    padding-top: 10px;
     padding-left: 24px
 }
 
@@ -13620,4 +13620,17 @@ iframe {
 
 .white-space-pre {
     white-space: pre
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.loader {
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    z-index: 9999999;
+    text-align: center;
 }
