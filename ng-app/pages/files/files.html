@@ -3,8 +3,12 @@
 </div> -->
 <section class="section">
     <div class="header-menu" style="height: 60px;">
+            
         <a class="file-action" id="uploadFile" title="Upload File" ng-click="$ctrl.showFileSelect()">
             <i class="fa fa-upload"></i>
+        </a>
+        <a class="file-action" id="uploadFile" title="Create Folder" ng-click="$ctrl.showNewFolderInput=true">
+            <i class="fas fa-folder-plus"></i>
         </a>
         <a class="file-action" ng-show="$ctrl.selectedFiles.length == 1 && !$ctrl.selectedFiles[0].isDirectory"  title="Download File">
             <i class="fa fa-download"></i>
@@ -71,21 +75,31 @@
             </tr>
         </thead>
         <tbody style="width: 697px;">
+
+            <tr ng-show="$ctrl.showNewFolderInput">
+                <td class="grid-select-col" role="gridcell"></td>
+                <td class="closer-left" role="gridcell">
+                    <span title="">
+                        <i class="fa fa-lg fa-folder-o"></i>
+                    </span>
+                    <input class="item-name form-control" type="text" ng-model="$ctrl.newFolderName" style="display: inline"/>
+                    <i class="fa fa-check" ng-click="$ctrl.createFolder()"></i>
+                    <i class="fa fa-times" ng-click="$ctrl.showNewFolderInput=false;$ctrl.newFolderName=''"></i>
+                </td>
+                <td class="grid-select-col" role="gridcell"></td>
+                <td class="grid-select-col" role="gridcell"></td>
+                <td class="grid-select-col" role="gridcell"></td>
+            </tr>
             
             <tr ng-repeat="file in $ctrl.files" ng-class="{ 'k-state-selected':file.isSelected}" ng-click="$ctrl.toggleFileSelect(file)">
                 
                 <td class="grid-select-col" role="gridcell">
-                    <i class="fa fa-check fa-grid-select">
-                    </i>
+                    <i class="fa fa-check fa-grid-select"></i>
                 </td>
                 <td class="closer-left" role="gridcell">
                     <span title="">
-                        <i class="fa fa-lg" ng-class="{'fa-folder-o': file.isDirectory, 'fa-file-image-o': !file.isDirectory}">
-                        </i>
-                        <i class="">
-                        </i>
-                        <i class="fa fa-lock ">
-                        </i>
+                        <i class="fa fa-lg" ng-class="{'fa-folder-o': file.isDirectory, 'fa-file-image-o': !file.isDirectory}"></i>
+                        <!-- <i class=""></i><i class="fa fa-lock "></i> -->
                     </span>
                     <a ng-show="!file.isRenaming" class="item-name" ng-click="$ctrl.goToDirectory(file)" ng-class="{'pointer': file.isDirectory}">{{file.fileName}}</a>
                     <input ng-show="file.isRenaming" class="item-name form-control" type="text" ng-model="file.editedName" style="display: inline"/>

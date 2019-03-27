@@ -1,5 +1,4 @@
 angular.module('easishare-plugin').controller("filesController", ["$scope","AuthService", "APIService", "$location", "$q", function($scope, AuthService, APIService, $location, $q){
-    console.log("Files Controller loaded");
     var $ctrl = this;
 
     $ctrl.path = "";
@@ -19,8 +18,7 @@ angular.module('easishare-plugin').controller("filesController", ["$scope","Auth
         $scope.$emit("ShowLoader",{});
         APIService.getFileList($ctrl.path, AuthService.getStorageToken())
         .then(data=>{
-            console.log(data);
-            if(data.ErrorMessage){
+                        if(data.ErrorMessage){
                 $location.path("/");
                 $scope.$emit("HideLoader",{});
                 return;
@@ -45,12 +43,27 @@ angular.module('easishare-plugin').controller("filesController", ["$scope","Auth
         });
         $q.all(promises)
         .then(data=>{
-            console.log(data);
             $ctrl.getFiles();
         }).catch(e=>{
             console.error(e);
             $ctrl.getFiles();
         });
+    };
+
+    $ctrl.createFolder = function(){
+        $ctrl.showNewFolderInput = false;
+        $scope.$emit("ShowLoader",{});
+        var path = $ctrl.path;
+        if(path){
+            path+="/"
+        }
+        path+=$ctrl.newFolderName;
+
+        APIService.createFolder(path, AuthService.getStorageToken())
+        .then(data=>{
+            $ctrl.newFolderName = "";
+            $ctrl.getFiles();
+        })
     };
 
     $ctrl.startRenameFile = function(file){
@@ -66,7 +79,6 @@ angular.module('easishare-plugin').controller("filesController", ["$scope","Auth
         }
         APIService.renameFile(path + file.fileName, path + file.editedName, AuthService.getStorageToken())
         .then(data=>{
-            console.log(data);
             file.isRenaming = false;
             $ctrl.getFiles();
         });
@@ -123,7 +135,6 @@ angular.module('easishare-plugin').controller("filesController", ["$scope","Auth
     };
 
     $ctrl.showFileSelect = function(){
-        console.log("clikced");
         document.getElementById("file1").click();
     }
 
@@ -144,13 +155,11 @@ angular.module('easishare-plugin').controller("filesController", ["$scope","Auth
             $scope.$emit("ShowLoader",{});
             APIService.uploadFile(fd, params)
             .then(data=>{
-                console.log(data);
                 $ctrl.getFiles();
             });
         }
         /* `$scope.$apply(function(scope){
-            console.log('files:', element.files);
-            $ctrl.files = [];
+                        $ctrl.files = [];
             for (var i = 0; i < element.files.length; i++) {
                 element.files[i].status = "queued";
                 $ctrl.files.push(element.files[i]);

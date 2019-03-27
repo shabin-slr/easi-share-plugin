@@ -107,6 +107,19 @@ angular.module('easishare-plugin').service("APIService", ["$http", "$soap", func
         );
     };
 
+    self.createFolder = function(path, token){
+        return makeSoapRequest(
+            SOAP_END_POINTS.STORAGE,
+            "CreateFolder",{
+                "Path": path,
+                "Options": {
+                    "Token": token,
+                    "NewErrorCodes": true
+                }
+            }
+        )
+    };
+
     self.deleteFolder = function(path, token){
         return makeSoapRequest(
             SOAP_END_POINTS.STORAGE,
