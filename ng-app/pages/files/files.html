@@ -1,12 +1,29 @@
 <!-- <div>
     
 </div> -->
-
 <section class="section">
-    <div class="header-menu">
-        <a id="uploadFile" style="cursor: pointer;position: absolute;padding: 22px;font-size: 24px;right: 0;" title="Upload File" ng-click="$ctrl.showFileSelect()">
+    <div class="header-menu" style="height: 60px;">
+        <a class="file-action" id="uploadFile" title="Upload File" ng-click="$ctrl.showFileSelect()">
             <i class="fa fa-upload"></i>
         </a>
+        <a class="file-action" ng-show="$ctrl.selectedFiles.length == 1 && !$ctrl.selectedFiles[0].isDirectory"  title="Download File">
+            <i class="fa fa-download"></i>
+        </a>
+        <a class="file-action" ng-show="$ctrl.selectedFiles.length"  title="Delete File">
+            <i class="fa fa-trash"></i>
+        </a>
+        <a class="file-action" ng-show="$ctrl.selectedFiles.length == 1"  title="Rename File" ng-click="$ctrl.startRenameFile($ctrl.selectedFiles[0])">
+            <i class="fa fa-pencil"></i>
+        </a>
+        <a class="file-action" ng-show="$ctrl.selectedFiles.length == 1"  title="Move File">
+            <i class="fa fa-copy"></i>
+        </a>
+    </div>
+    <input id="file1" style="display: none" type="file" onchange="angular.element(this).scope().$ctrl.handleFileAdd(this)"/>
+</section>
+<section class="section">
+    <div class="header-menu">
+        
         <ol class="breadcrumb">
             <li><a class="pointer" ng-click="$ctrl.gotToPath(-1)">WorkDrive</a></li>
             <li ng-repeat="path in $ctrl.folderStack">
@@ -14,7 +31,6 @@
             </li>
         </ol>
     </div>
-    <input id="file1" style="display: none" type="file" onchange="angular.element(this).scope().$ctrl.handleFileAdd(this)">
 </section>
 <section class="section">
     <table role="grid" class="table table-responsive table-striped">
@@ -36,27 +52,27 @@
                         <span class="k-icon k-filter">
                         </span>
                     </a>
-                    <a class="k-link" href="/web/Storage?filesGrid-sort=lastModificationTime-asc">Modified</a>
+                    <a class="k-link">Modified</a>
                 </th>
                 <th class="k-header k-filterable" data-field="FileExtension" data-title="Type" scope="col" data-role="sortable">
                     <a class="k-grid-filter" tabindex="-1">
                         <span class="k-icon k-filter">
                         </span>
                     </a>
-                    <a class="k-link" href="/web/Storage?filesGrid-sort=FileExtension-asc">Type</a>
+                    <a class="k-link">Type</a>
                 </th>
                 <th class="k-header k-filterable" data-field="Size" data-title="Size" scope="col" data-role="sortable">
                     <a class="k-grid-filter" tabindex="-1">
                         <span class="k-icon k-filter">
                         </span>
                     </a>
-                    <a class="k-link" href="/web/Storage?filesGrid-sort=Size-asc">Size</a>
+                    <a class="k-link">Size</a>
                 </th>
             </tr>
         </thead>
         <tbody style="width: 697px;">
-
-            <tr ng-repeat="file in $ctrl.files" ng-class="{ 'k-state-selected':file.isSelected}">
+            
+            <tr ng-repeat="file in $ctrl.files" ng-class="{ 'k-state-selected':file.isSelected}" ng-click="$ctrl.toggleFileSelect(file)">
                 
                 <td class="grid-select-col" role="gridcell">
                     <i class="fa fa-check fa-grid-select">
@@ -71,13 +87,21 @@
                         <i class="fa fa-lock ">
                         </i>
                     </span>
-                    <a class="item-name" ng-click="$ctrl.goToDirectory(file)" ng-class="{'pointer': file.isDirectory}">{{file.fileName}}</a>
+                    <a ng-show="!file.isRenaming" class="item-name" ng-click="$ctrl.goToDirectory(file)" ng-class="{'pointer': file.isDirectory}">{{file.fileName}}</a>
+                    <input ng-show="file.isRenaming" class="item-name form-control" type="text" ng-model="file.editedName" style="display: inline"/>
+                    <i class="fa fa-check" ng-show="file.isRenaming" ng-click="$ctrl.updateFileName(file)">
+                    </i>
+                    <i class="fa fa-times" ng-show="file.isRenaming" ng-click="$ctrl.cancelFileUpdate(file)">
+                        </i>
+                    <!-- <a class="item-name">
+                        
+                    </a> -->
                 </td>
                 <td role="gridcell">{{file.lastModificationTime| date : "MM/dd/yyyy h:mm a"}}</td>
                 <td role="gridcell">{{$ctrl.getFileType(file)}}</td>
                 <td role="gridcell">{{$ctrl.getFileSize(file.fileSize)}}</td>
             </tr>
-
+            
             <!-- <tr data-uid="8e054c1a-b4ef-495e-bc62-1d7f0c8215b8" role="row">
                 
                 <td class="grid-select-col" role="gridcell">

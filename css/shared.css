@@ -13634,3 +13634,10 @@ iframe {
     z-index: 9999999;
     text-align: center;
 }
+
+.file-action {
+    cursor: pointer;
+    font-size: 30px;
+    float: right;
+    padding: 10px;
+}

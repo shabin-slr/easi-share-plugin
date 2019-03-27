@@ -78,6 +78,21 @@ angular.module('easishare-plugin').service("APIService", ["$http", "$soap", func
                 }
             }
         );
+    };
+
+    self.renameFile = function(currentName, newName, token) {
+        return makeSoapRequest(
+            SOAP_END_POINTS.STORAGE,
+            "MoveFile",{
+                "CurrentFileName": currentName,
+                "NewFileName": newName,
+                "Options": {
+                    "UseDefaultPathDelimiter": true,
+                    "Token": token
+                }
+            }
+
+        )
     }
 
     let makeRestRequest = function(method, endPoint, data, headers){

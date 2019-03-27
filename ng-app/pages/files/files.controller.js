@@ -1,18 +1,58 @@
-angular.module('easishare-plugin').controller("filesController", ["$scope","AuthService", "APIService", function($scope, AuthService, APIService){
+angular.module('easishare-plugin').controller("filesController", ["$scope","AuthService", "APIService", "$location", function($scope, AuthService, APIService, $location){
     console.log("Files Controller loaded");
     var $ctrl = this;
 
     $ctrl.path = "";
     $ctrl.folderStack = [];
+    $ctrl.selectedFiles = [];
+
+    $ctrl.toggleFileSelect = function(file){
+        file.isSelected = !file.isSelected;
+        if(file.isSelected){
+            $ctrl.selectedFiles.push(file);
+        } else {
+            $ctrl.selectedFiles = $ctrl.selectedFiles.filter(x=>x.fileUrl != file.fileUrl);
+        }
+    }
 
     $ctrl.getFiles = function(){
         $scope.$emit("ShowLoader",{});
         APIService.getFileList($ctrl.path, AuthService.getStorageToken())
         .then(data=>{
             console.log(data);
+            if(data.ErrorMessage){
+                $location.path("/");
+                $scope.$emit("HideLoader",{});
+                return;
+            }
+            $ctrl.selectedFiles = [];
             $ctrl.files = data.Result;
             $scope.$emit("HideLoader",{});
         });
+    };
+
+    $ctrl.startRenameFile = function(file){
+        file.editedName = file.fileName 
+        file.isRenaming = true;
+    }
+
+    $ctrl.updateFileName = function(file){
+        $scope.$emit("ShowLoader",{});
+        var path = $ctrl.path;
+        if(path){
+            path+="/"
+        }
+        APIService.renameFile(path + file.fileName, path + file.editedName, AuthService.getStorageToken())
+        .then(data=>{
+            console.log(data);
+            file.isRenaming = false;
+            $ctrl.getFiles();
+        });
+    };
+
+    $ctrl.cancelFileUpdate = function(file){
+        file.isRenaming = false;
+        file.editedName = "";
     };
 
     $ctrl.goToDirectory = function(file){
