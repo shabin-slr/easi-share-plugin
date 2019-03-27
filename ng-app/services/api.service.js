@@ -91,9 +91,34 @@ angular.module('easishare-plugin').service("APIService", ["$http", "$soap", func
                     "Token": token
                 }
             }
+        );
+    };
 
-        )
-    }
+    self.deleteFile = function(path, token){
+        return makeSoapRequest(
+            SOAP_END_POINTS.STORAGE,
+            "DeleteFile",{
+                "Path": path,
+                "Options": {
+                    "Confirmed": true,
+                    "Token": token
+                }
+            }
+        );
+    };
+
+    self.deleteFolder = function(path, token){
+        return makeSoapRequest(
+            SOAP_END_POINTS.STORAGE,
+            "DeleteFolder",{
+                "Path": path,
+                "Options": {
+                    "Confirmed": true,
+                    "Token": token
+                }
+            }
+        );
+    };
 
     let makeRestRequest = function(method, endPoint, data, headers){
         let requestConfig = {

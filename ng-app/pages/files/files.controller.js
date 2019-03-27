@@ -1,4 +1,4 @@
-angular.module('easishare-plugin').controller("filesController", ["$scope","AuthService", "APIService", "$location", function($scope, AuthService, APIService, $location){
+angular.module('easishare-plugin').controller("filesController", ["$scope","AuthService", "APIService", "$location", "$q", function($scope, AuthService, APIService, $location, $q){
     console.log("Files Controller loaded");
     var $ctrl = this;
 
@@ -28,6 +28,28 @@ angular.module('easishare-plugin').controller("filesController", ["$scope","Auth
             $ctrl.selectedFiles = [];
             $ctrl.files = data.Result;
             $scope.$emit("HideLoader",{});
+        });
+    };
+
+    $ctrl.deleteAction = function(){
+        $scope.$emit("ShowLoader",{});
+        var path = $ctrl.path;
+        if(path){
+            path+="/"
+        }
+        var promises = [];
+        $ctrl.selectedFiles.forEach(file=>{
+            var deletePath = path + file.fileName;
+            var deleteAction = file.isDirectory?APIService.deleteFolder:APIService.deleteFile;
+            promises.push(deleteAction(deletePath, AuthService.getStorageToken()));
+        });
+        $q.all(promises)
+        .then(data=>{
+            console.log(data);
+            $ctrl.getFiles();
+        }).catch(e=>{
+            console.error(e);
+            $ctrl.getFiles();
         });
     };
 
