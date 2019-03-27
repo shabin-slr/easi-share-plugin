@@ -66,6 +66,20 @@ angular.module('easishare-plugin').service("APIService", ["$http", "$soap", func
         );
     };
 
+    self.uploadFile = function(formdata, params){
+        return $http.post(
+            getSoapEndPoint(SOAP_END_POINTS.UPLOAD_FILES),
+            formdata,
+            {
+                params: params,
+                transformRequest: angular.identity,
+                headers: {
+                    'Content-Type': undefined
+                }
+            }
+        );
+    }
+
     let makeRestRequest = function(method, endPoint, data, headers){
         let requestConfig = {
             method: method,

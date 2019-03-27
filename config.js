@@ -21,5 +21,6 @@ const REST_END_POINTS = {
 
 const SOAP_END_POINTS = {
     "SHARE": "/Share.asmx",
-    "STORAGE": "/Storage.asmx"
+    "STORAGE": "/Storage.asmx",
+    "UPLOAD_FILES" : "/UploadStorageFile.ashx"
 };

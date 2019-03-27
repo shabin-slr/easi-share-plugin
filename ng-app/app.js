@@ -1,10 +1,23 @@
 angular.module('easishare-plugin',['ngRoute', 'angularSoap']);
 
-angular.module('easishare-plugin').controller("AppController", ["$scope", "APIService", function($scope, APIService){
+angular.module('easishare-plugin').controller("AppController", ["$scope", "APIService", "AuthService", "$location", function($scope, APIService, AuthService, $location){
     var $mainCtrl = this;
+
+    $mainCtrl.signOut = function(){
+        AuthService.setRestToken(null);
+        AuthService.setShareToken(null);
+        AuthService.setStorageToken(null);
+        $location.path("/");
+    };
     let checkAuth = function(){
         // check if logged in
         // if not, redirect to login page
+        AuthService.validateTokens()
+        .then(()=>{
+          $location.path("files");  
+        }, err=>{
+            $mainCtrl.signOut();
+        });
     };
     checkAuth();
 

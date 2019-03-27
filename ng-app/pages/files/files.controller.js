@@ -60,6 +60,42 @@ angular.module('easishare-plugin').controller("filesController", ["$scope","Auth
         return (bytes / Math.pow(1024, i)).toFixed(1) + ' ' + sizes[i];
     };
 
+    $ctrl.showFileSelect = function(){
+        console.log("clikced");
+        document.getElementById("file1").click();
+    }
+
+    $ctrl.handleFileAdd = function(element){
+        $ctrl.element = element;
+        if(element.files.length){
+            $ctrl.fileToUpload = element.files[0];
+
+            var fd = new FormData();
+            fd.append("files", $ctrl.fileToUpload);//, $ctrl.fileToUpload.name
+            var path = $ctrl.path;
+            if(path) path+="/";
+            var params = {
+                Token: AuthService.getStorageToken(),
+                FullSize: $ctrl.fileToUpload.size,
+                path: path+ $ctrl.fileToUpload.name
+            }
+            $scope.$emit("ShowLoader",{});
+            APIService.uploadFile(fd, params)
+            .then(data=>{
+                console.log(data);
+                $ctrl.getFiles();
+            });
+        }
+        /* `$scope.$apply(function(scope){
+            console.log('files:', element.files);
+            $ctrl.files = [];
+            for (var i = 0; i < element.files.length; i++) {
+                element.files[i].status = "queued";
+                $ctrl.files.push(element.files[i]);
+            }
+        });` */
+    };
+
     (()=>{
         $ctrl.getFiles();
     })();

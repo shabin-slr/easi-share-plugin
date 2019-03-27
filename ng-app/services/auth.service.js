@@ -1,4 +1,4 @@
-angular.module('easishare-plugin').service("AuthService", [function(){
+angular.module('easishare-plugin').service("AuthService", ["$q", function($q){
     var self = this;
     self.restToken = null;
     self.shareToken = null;
@@ -21,14 +21,6 @@ angular.module('easishare-plugin').service("AuthService", [function(){
         return localStorage.getItem("shareToken");
     };
 
-    /* self.setShareESToken = function(token){
-        localStorage.setItem("shareESToken", token);
-    };
-
-    self.getShareESToken = function(){
-        localStorage.getItem("shareESToken");
-    }; */
-
     self.setStorageToken = function(token){
         localStorage.setItem("storageToken", token);
     };
@@ -36,4 +28,11 @@ angular.module('easishare-plugin').service("AuthService", [function(){
     self.getStorageToken = function(){
         return localStorage.getItem("storageToken");
     };
+
+    self.validateTokens = function(){
+        if(!self.getRestToken() || !self.getShareToken() || !self.getStorageToken()){
+            return $q.reject();
+        }
+        return $q.resolve();
+    }
 }]);

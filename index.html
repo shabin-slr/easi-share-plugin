@@ -11,11 +11,13 @@
     <link rel="stylesheet" href="./css/login.css">
     <link rel="stylesheet" href="./css/shared.css">
     <link rel="stylesheet" href="./css/teal.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
 </head>
 <body ng-controller="AppController as $mainCtrl" class="teal">
-
+    
     <div class="loader" ng-show="$mainCtrl.showLoader">
-            <i class="fa fa-spinner fa-spin" style="font-size:36px;color: black;top: 50%;"></i>
+        <i class="fa fa-spinner fa-spin" style="font-size:36px;color: black;top: 50%;"></i>
     </div>
     <div class="container">
         <header id="header">
@@ -24,22 +26,33 @@
                 <div class="left-side header-logo">
                     <img src="./images/logo.png" alt="">
                 </div>
+                <!-- <div class="navbar-right">
+                    <div class="dropdown profile-link">
+                        <a data-toggle="dropdown" role="button" id="drop5" style="cursor: pointer;">User<span class="caret"></span></a>
+                        <ul aria-labelledby="drop5" role="menu" class="dropdown-menu" id="menu2">
+                            <li role="presentation"><a tabindex="-1" role="menuitem" onclick="InitChangePassword();" data-target="#changePasswordPrompt" data-toggle="modal" style="cursor: pointer;"><i class="fa fa-cog"></i>Change Password</a></li>
+                            <li class="divider" role="presentation"></li>
+                            <li role="presentation"><a ng-click="$mainCtrl.signOut()" id="logoutLink" tabindex="-1" role="menuitem"><i class="fa fa-sign-out"></i>Sign Out</a></li>
+                        </ul>
+                       <a data-target="#aboutModal" data-toggle="modal" title="About" style="cursor: pointer;"><i class="fa fa-question-circle fa-lg"></i></a>
+                    </div>
+                </div> -->
             </div>
         </header>
         <div class="main">
             <div class="ng-view"></div>
         </div>
     </div>
-        
-    </body>
-    <script src="./config.js"></script>
-    <script src="./libraries/angular.min.js"></script>
-    <script src="./libraries/angular-route.min.js"></script>
-    <script src="./libraries/soapClient.js"></script>
-    <script src="./libraries/angular-soap.js"></script>
-    <script src="./ng-app/app.js"></script>
-    <script src="./ng-app/services/auth.service.js"></script>
-    <script src="./ng-app/services/api.service.js"></script>
-    <script src="./ng-app/pages/auth/auth.controller.js"></script>
-    <script src="./ng-app/pages/files/files.controller.js"></script>
-    </html>
+    
+</body>
+<script src="./config.js"></script>
+<script src="./libraries/angular.min.js"></script>
+<script src="./libraries/angular-route.min.js"></script>
+<script src="./libraries/soapClient.js"></script>
+<script src="./libraries/angular-soap.js"></script>
+<script src="./ng-app/app.js"></script>
+<script src="./ng-app/services/auth.service.js"></script>
+<script src="./ng-app/services/api.service.js"></script>
+<script src="./ng-app/pages/auth/auth.controller.js"></script>
+<script src="./ng-app/pages/files/files.controller.js"></script>
+</html>
