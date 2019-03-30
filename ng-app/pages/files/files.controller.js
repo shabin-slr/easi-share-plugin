@@ -91,6 +91,7 @@ angular.module('easishare-plugin').controller("filesController", ["$scope","Auth
 
     $ctrl.goToDirectory = function(file){
         if(!file.isDirectory){
+            $ctrl.downloadFile(file);
             return;
         }
         $ctrl.folderStack.push(file.fileName);
@@ -165,6 +166,19 @@ angular.module('easishare-plugin').controller("filesController", ["$scope","Auth
                 $ctrl.files.push(element.files[i]);
             }
         });` */
+    };
+
+    $ctrl.downloadFile = function(file) {
+        var link = document.createElement("a");
+        link.download = file.fileName;
+        var path = $ctrl.path;
+        path = path+ (!!path?"/":"") + file.fileName;
+
+        link.href = APIService.getDownloadUrl(path, AuthService.getStorageToken());
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        delete link;
     };
 
     (()=>{

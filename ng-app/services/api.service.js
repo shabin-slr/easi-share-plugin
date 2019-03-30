@@ -133,6 +133,11 @@ angular.module('easishare-plugin').service("APIService", ["$http", "$soap", func
         );
     };
 
+    self.getDownloadUrl = function(path, storageToken){
+        var url = getSoapEndPoint(SOAP_END_POINTS.DOWNLOAD_URL);
+        return url + "?Token=" + storageToken + "&path=" + path;
+    }
+
     let makeRestRequest = function(method, endPoint, data, headers){
         let requestConfig = {
             method: method,
