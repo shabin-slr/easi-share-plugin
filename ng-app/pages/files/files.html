@@ -7,7 +7,7 @@
         <a class="file-action" id="uploadFile" title="Create Folder" ng-click="$ctrl.showNewFolderInput=true">
             <i class="fas fa-folder-plus"></i>
         </a>
-        <a class="file-action" ng-show="$ctrl.selectedFiles.length == 1 && !$ctrl.selectedFiles[0].isDirectory"  title="Download File">
+        <a class="file-action" ng-show="$ctrl.selectedFiles.length == 1 && !$ctrl.selectedFiles[0].isDirectory"  title="Download File" ng-click="$ctrl.downloadFile(file)">
             <i class="fa fa-download"></i>
         </a>
         <a class="file-action" ng-show="$ctrl.selectedFiles.length"  title="Delete File" ng-click="$ctrl.deleteAction()">
