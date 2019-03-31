@@ -1,0 +1,42 @@
+<div class="modal" id="shareModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" ng-controller="ShareModalController as $ctrl">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Share</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="name">Name:</label>
+                        <input type="text" required="true" ng-model="$ctrl.recipient.Fullname" class="form-control" id="name">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email address:</label>
+                        <input type="email" required="true" ng-model="$ctrl.recipient.Email" class="form-control" id="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="mobile">Mobile number:</label>
+                        <input type="text" required="true" ng-model="$ctrl.recipient.Mobile" class="form-control" id="mobile">
+                    </div>
+                    <!-- <div class="checkbox">
+                        <label><input type="checkbox"> Remember me</label>
+                    </div>
+                    <button type="submit" class="btn btn-default">Submit</button>
+                     -->
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    <i class="fa fa-close"></i>
+                    Cancel
+                </button>
+                <button type="button" class="btn btn-primary" ng-click="$ctrl.save()" ng-disabled="!$ctrl.recipient.Fullname || !$ctrl.recipient.Email || !$ctrl.recipient.Mobile">
+                    <i class="fa fa-envelope"></i>
+                    Share
+                </button>
+            </div>
+        </div>
+    </div>

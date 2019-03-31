@@ -51,7 +51,6 @@ angular.module('easishare-plugin').controller("filesController", ["$scope","Auth
     };
 
     $ctrl.createFolder = function(){
-        $ctrl.showNewFolderInput = false;
         $scope.$emit("ShowLoader",{});
         var path = $ctrl.path;
         if(path){
@@ -61,6 +60,7 @@ angular.module('easishare-plugin').controller("filesController", ["$scope","Auth
 
         APIService.createFolder(path, AuthService.getStorageToken())
         .then(data=>{
+            $ctrl.showNewFolderInput = false
             $ctrl.newFolderName = "";
             $ctrl.getFiles();
         })
@@ -168,6 +168,11 @@ angular.module('easishare-plugin').controller("filesController", ["$scope","Auth
         });` */
     };
 
+    $ctrl.share = function(){
+        if(!$ctrl.selectedFiles.length) return;
+        $('#shareModal').modal('show');
+    };
+
     $ctrl.downloadFile = function(file) {
         var link = document.createElement("a");
         link.download = file.fileName;
@@ -180,6 +185,25 @@ angular.module('easishare-plugin').controller("filesController", ["$scope","Auth
         document.body.removeChild(link);
         delete link;
     };
+
+    $scope.$on("shareSelectedFiles", function(event, data){
+        console.log(data);
+        $scope.$emit("ShowLoader",{});
+        APIService.share($ctrl.selectedFiles, data.recipient, data.shareSettings, AuthService.getShareToken())
+        .then(data=>{
+            console.log(data);
+            if(data.SingleLinks && data.SingleLinks.length){
+                alert(data.SingleLinks[0]);
+                // @TODO, show this in a click copy popup
+            } else {
+                alert("An error occurred, please try again later");
+            }
+            $scope.$emit("HideLoader",{});
+        }).catch(e=>{
+            console.error(e);
+            $scope.$emit("HideLoader",{});
+        });
+    });
 
     (()=>{
         $ctrl.getFiles();

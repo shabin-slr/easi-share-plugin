@@ -136,6 +136,42 @@ angular.module('easishare-plugin').service("APIService", ["$http", "$soap", func
     self.getDownloadUrl = function(path, storageToken){
         var url = getSoapEndPoint(SOAP_END_POINTS.DOWNLOAD_URL);
         return url + "?Token=" + storageToken + "&path=" + path;
+    };
+
+    self.share = function(files, recipient, settings, token){
+        /* var Documents = {};
+        files.forEach((x,index)=>{
+            Document[""+index] = {
+                "ShareFileInfo": {
+                    "DocumentUrl": x.fileUrl,
+                    "FileSize": x.fileSize,
+                    "LastModifiedDateTime": x.lastModificationTime
+                }
+            };
+        }); */
+        let requestBody = {
+            "Options":{
+                "Documents": files.map(x=>{
+                    return {
+                        "ShareFileInfo": {
+                            "DocumentUrl": x.fileUrl,
+                            "FileSize": x.fileSize,
+                            "LastModifiedDateTime": x.lastModificationTime
+                        }
+                    }
+                }),
+                "Recipients" : [
+                    {"ShareRecipientInfo": recipient}
+                ],
+                ...settings,
+                Token: token
+            }
+        };
+        return makeSoapRequest(
+            SOAP_END_POINTS.SHARE,
+            "ShareItems",
+            requestBody
+        );
     }
 
     let makeRestRequest = function(method, endPoint, data, headers){
@@ -175,7 +211,7 @@ angular.module('easishare-plugin').service("APIService", ["$http", "$soap", func
         };
         url += APP_CONFIG.soap.soapBaseUrl + api;
         return url;
-    }
+    };
 
 }]);
 

@@ -16,8 +16,11 @@
         <a class="file-action" ng-show="$ctrl.selectedFiles.length == 1"  title="Rename File" ng-click="$ctrl.startRenameFile($ctrl.selectedFiles[0])">
             <i class="fa fa-pencil"></i>
         </a>
-        <a class="file-action" ng-show="$ctrl.selectedFiles.length == 1"  title="Move File">
+        <a class="file-action" ng-show="$ctrl.selectedFiles.length == 1"  title="Copy/Move File">
             <i class="fa fa-copy"></i>
+        </a>
+        <a class="file-action" ng-show="$ctrl.selectedFiles.length"  title="Share" ng-click="$ctrl.share()">
+            <i class="fas fa-external-link-alt"></i>
         </a>
     </div>
     <input id="file1" style="display: none" type="file" onchange="angular.element(this).scope().$ctrl.handleFileAdd(this)"/>
@@ -79,7 +82,7 @@
                     <span title="">
                         <i class="fa fa-lg fa-folder-o"></i>
                     </span>
-                    <input class="item-name form-control" type="text" ng-model="$ctrl.newFolderName" style="display: inline"/>
+                    <input class="item-name form-control" type="text" ng-model="$ctrl.newFolderName" style="display: inline" on-enter-press="$ctrl.createFolder()" />
                     <i class="fa fa-check" ng-click="$ctrl.createFolder()"></i>
                     <i class="fa fa-times" ng-click="$ctrl.showNewFolderInput=false;$ctrl.newFolderName=''"></i>
                 </td>
@@ -137,3 +140,5 @@
         </tbody>
     </table>
 </section>
+
+<ng-include src="'./ng-app/pages/files/share-popup.html'"></ng-include>

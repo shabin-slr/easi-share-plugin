@@ -77,20 +77,23 @@ SOAPClientParameters._serialize = function(o)
                     if(!isNaN(p))   // linear array
                     {
                         (/function\s+(\w*)\s*\(/ig).exec(o[p].constructor.toString());
-                        var type = RegExp.$1;
-                        switch(type)
-                        {
-                            case "":
-                                type = typeof(o[p]);
-                            case "String":
-                                type = "string"; break;
-                            case "Number":
-                                type = "int"; break;
-                            case "Boolean":
-                                type = "bool"; break;
-                            case "Date":
-                                type = "DateTime"; break;
-                        }
+						var type = RegExp.$1;
+						if(type == "Object"){
+							s += SOAPClientParameters._serialize(o[p]);
+						} else {
+							switch(type){
+								case "":
+									type = typeof(o[p]);
+								case "String":
+									type = "string"; break;
+								case "Number":
+									type = "int"; break;
+								case "Boolean":
+									type = "bool"; break;
+								case "Date":
+									type = "DateTime"; break;
+							}
+						}
                         s += "<" + type + ">" + SOAPClientParameters._serialize(o[p]) + "</" + type + ">"
                     }
                     else    // associative array
