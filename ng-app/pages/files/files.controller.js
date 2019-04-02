@@ -18,9 +18,10 @@ angular.module('easishare-plugin').controller("filesController", ["$scope","Auth
         $scope.$emit("ShowLoader",{});
         APIService.getFileList($ctrl.path, AuthService.getStorageToken())
         .then(data=>{
-                        if(data.ErrorMessage){
+            if(data.ErrorMessage){
                 $location.path("/");
                 $scope.$emit("HideLoader",{});
+                $('.modal').modal('hide');
                 return;
             }
             $ctrl.selectedFiles = [];
@@ -171,6 +172,11 @@ angular.module('easishare-plugin').controller("filesController", ["$scope","Auth
     $ctrl.share = function(){
         if(!$ctrl.selectedFiles.length) return;
         $('#shareModal').modal('show');
+    };
+
+    $ctrl.showMoveModal = function(){
+        if(!$ctrl.selectedFiles.length) return;
+        $('#moveFilePopup').modal('show');
     };
 
     $ctrl.downloadFile = function(file) {

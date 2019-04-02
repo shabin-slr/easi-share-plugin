@@ -7,7 +7,7 @@
         <a class="file-action" id="uploadFile" title="Create Folder" ng-click="$ctrl.showNewFolderInput=true">
             <i class="fas fa-folder-plus"></i>
         </a>
-        <a class="file-action" ng-show="$ctrl.selectedFiles.length == 1 && !$ctrl.selectedFiles[0].isDirectory"  title="Download File" ng-click="$ctrl.downloadFile(file)">
+        <a class="file-action" ng-show="$ctrl.selectedFiles.length == 1 && !$ctrl.selectedFiles[0].isDirectory"  title="Download File" ng-click="$ctrl.downloadFile($ctrl.selectedFiles[0])">
             <i class="fa fa-download"></i>
         </a>
         <a class="file-action" ng-show="$ctrl.selectedFiles.length"  title="Delete File" ng-click="$ctrl.deleteAction()">
@@ -16,7 +16,7 @@
         <a class="file-action" ng-show="$ctrl.selectedFiles.length == 1"  title="Rename File" ng-click="$ctrl.startRenameFile($ctrl.selectedFiles[0])">
             <i class="fa fa-pencil"></i>
         </a>
-        <a class="file-action" ng-show="$ctrl.selectedFiles.length == 1"  title="Copy/Move File">
+        <a class="file-action" ng-show="$ctrl.selectedFiles.length"  title="Copy/Move File" ng-click="$ctrl.showMoveModal()">
             <i class="fa fa-copy"></i>
         </a>
         <a class="file-action" ng-show="$ctrl.selectedFiles.length"  title="Share" ng-click="$ctrl.share()">
@@ -142,3 +142,5 @@
 </section>
 
 <ng-include src="'./ng-app/pages/files/share-popup.html'"></ng-include>
+<ng-include src="'./ng-app/pages/files/move-file-popup.html'"></ng-include>
+
