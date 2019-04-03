@@ -1,6 +1,6 @@
 <section class="section">
     <div class="header-menu" style="height: 60px;">
-            
+        
         <a class="file-action" id="uploadFile" title="Upload File" ng-click="$ctrl.showFileSelect()">
             <i class="fa fa-upload"></i>
         </a>
@@ -40,10 +40,6 @@
     <table role="grid" class="table table-responsive table-striped horizontal-scroll">
         <thead>
             <tr>
-                <!-- <th scope="col">
-                    <i class="fa fa-check fa-grid-select">
-                    </i>
-                </th> -->
                 <th class="k-header k-filterable" data-field="fileName" data-title="Name" scope="col" data-role="sortable">
                     <a class="k-grid-filter" tabindex="-1">
                         <span class="k-icon k-filter">
@@ -75,9 +71,8 @@
             </tr>
         </thead>
         <tbody style="width: 697px;">
-
+            
             <tr ng-show="$ctrl.showNewFolderInput">
-                <!-- <td class="grid-select-col" role="gridcell"></td> -->
                 <td class="closer-left" role="gridcell">
                     <span title="">
                         <i class="fa fa-lg fa-folder-o"></i>
@@ -90,9 +85,8 @@
                 <td class="grid-select-col" role="gridcell"></td>
                 <td class="grid-select-col" role="gridcell"></td>
             </tr>
-
+            
             <tr ng-show="!$ctrl.files.length">
-                <!-- <td role="gridcell"></td> -->
                 <td role="gridcell">{{$ctrl.fileLoadStatus}}</td>
                 <td role="gridcell"></td>
                 <td role="gridcell"></td>
@@ -108,48 +102,40 @@
                     <span title="">
                         <i class="fa fa-check fa-grid-select"></i>
                         <i class="fa fa-lg" ng-class="{'fa-folder-o': file.isDirectory, 'fa-file-image-o': !file.isDirectory}"></i>
-                        <!-- <i class=""></i><i class="fa fa-lock "></i> -->
                     </span>
                     <a ng-show="!file.isRenaming" class="item-name" ng-click="$ctrl.goToDirectory(file)" ng-class="{'pointer': file.isDirectory}">{{file.fileName}}</a>
                     <input ng-show="file.isRenaming" class="item-name form-control" type="text" ng-model="file.editedName" style="display: inline" on-enter-press="$ctrl.updateFileName(file)"/>
-                    <i class="fa fa-check" ng-show="file.isRenaming" ng-click="$ctrl.updateFileName(file)">
-                    </i>
-                    <i class="fa fa-times" ng-show="file.isRenaming" ng-click="$ctrl.cancelFileUpdate(file)">
-                        </i>
-                    <!-- <a class="item-name">
-                        
-                    </a> -->
+                    <i class="fa fa-check" ng-show="file.isRenaming" ng-click="$ctrl.updateFileName(file)"></i>
+                    <i class="fa fa-times" ng-show="file.isRenaming" ng-click="$ctrl.cancelFileUpdate(file)"></i>
                 </td>
                 <td role="gridcell">{{file.lastModificationTime| date : "MM/dd/yyyy h:mm a"}}</td>
                 <td role="gridcell">{{$ctrl.getFileType(file)}}</td>
                 <td role="gridcell">{{$ctrl.getFileSize(file.fileSize)}}</td>
             </tr>
-            
-            <!-- <tr data-uid="8e054c1a-b4ef-495e-bc62-1d7f0c8215b8" role="row">
-                
-                <td class="grid-select-col" role="gridcell">
-                    <i class="fa fa-check fa-grid-select">
-                    </i>
-                </td>
-                <td class="closer-left" role="gridcell">
-                    <span title="">
-                        <i class="fa fa-file-image-o fa-lg">
-                        </i>
-                        <i class="">
-                        </i>
-                        <i class="fa fa-lock ">
-                        </i>
-                    </span>
-                    <a class="item-name" href="#">Test File 1.png</a>
-                </td>
-                <td role="gridcell">03/19/2019 6:10 AM</td>
-                <td role="gridcell">png</td>
-                <td role="gridcell" title="116.7 KB">116.7 KB</td>
-            </tr> -->
         </tbody>
     </table>
 </section>
 
 <ng-include src="'./ng-app/pages/files/share-popup.html'"></ng-include>
 <ng-include src="'./ng-app/pages/files/move-file-popup.html'"></ng-include>
+
+<div id="clickToCopyModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">{{$ctrl.copyModalHeader}}</h4>
+            </div>
+            <div class="modal-body">
+                <input type="text" >
+                <button onclick="this.select()&&document.execCommand('copy');">Copy text</button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+        
+    </div>
+</div>
 
