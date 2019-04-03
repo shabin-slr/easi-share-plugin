@@ -13641,3 +13641,9 @@ iframe {
     float: right;
     padding: 10px;
 }
+
+.horizontal-scroll {
+    display: inline-block;
+    overflow-x: scroll;
+    white-space: nowrap;
+}
