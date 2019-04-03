@@ -2,7 +2,7 @@ angular.module('easishare-plugin',['ngRoute', 'angularSoap']);
 
 angular.module('easishare-plugin').controller("AppController", ["$scope", "APIService", "AuthService", "$location", function($scope, APIService, AuthService, $location){
     var $mainCtrl = this;
-
+    
     $mainCtrl.signOut = function(){
         AuthService.setRestToken(null);
         AuthService.setShareToken(null);
@@ -14,13 +14,13 @@ angular.module('easishare-plugin').controller("AppController", ["$scope", "APISe
         // if not, redirect to login page
         AuthService.validateTokens()
         .then(()=>{
-          $location.path("files");  
+            $location.path("/files");  
         }, err=>{
             $mainCtrl.signOut();
         });
     };
     checkAuth();
-
+    
     $scope.$on("ShowLoader", function(){
         $mainCtrl.showLoader = true;
     });
@@ -56,3 +56,30 @@ angular.module('easishare-plugin').config(function($routeProvider) {
         controllerAs: "$ctrl"
     })
 });
+
+angular.module('easishare-plugin').filter("groupBy",["$parse","$filter",function($parse,$filter){
+    return function(array,groupByField){
+        var result	= [];
+        var prev_item = null;
+        var groupKey = false;
+        var filteredData = $filter('orderBy')(array,groupByField) || [];
+        for(var i=0;i<filteredData.length;i++){
+            groupKey = false;
+            if(prev_item !== null){
+                if(prev_item[groupByField] !== filteredData[i][groupByField]){
+                    groupKey = true;
+                }
+            } else {
+                groupKey = true;  
+            }
+            if(groupKey){
+                filteredData[i]['group_by_key'] =true;  
+            } else {
+                filteredData[i]['group_by_key'] =false;  
+            }
+            result.push(filteredData[i]);
+            prev_item = filteredData[i];
+        }
+        return result;
+    }
+}]);

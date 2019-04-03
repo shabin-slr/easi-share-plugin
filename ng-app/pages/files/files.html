@@ -90,8 +90,16 @@
                 <td class="grid-select-col" role="gridcell"></td>
                 <td class="grid-select-col" role="gridcell"></td>
             </tr>
+
+            <tr ng-show="!$ctrl.files.length">
+                <td role="gridcell"></td>
+                <td role="gridcell">{{$ctrl.fileLoadStatus}}</td>
+                <td role="gridcell"></td>
+                <td role="gridcell"></td>
+                <td role="gridcell"></td>
+            </tr>
             
-            <tr ng-repeat="file in $ctrl.files" ng-class="{ 'k-state-selected':file.isSelected}" ng-click="$ctrl.toggleFileSelect(file)">
+            <tr ng-repeat="file in $ctrl.files | groupBy:'-isDirectory'" ng-class="{ 'k-state-selected':file.isSelected}" ng-click="$ctrl.toggleFileSelect(file)">
                 
                 <td class="grid-select-col" role="gridcell">
                     <i class="fa fa-check fa-grid-select"></i>

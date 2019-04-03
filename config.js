@@ -23,5 +23,6 @@ const SOAP_END_POINTS = {
     "SHARE": "/Share.asmx",
     "STORAGE": "/Storage.asmx",
     "UPLOAD_FILES" : "/UploadStorageFile.ashx",
-    "DOWNLOAD_URL": "/DownloadStorageFile.ashx"
+    "DOWNLOAD_URL": "/DownloadStorageFile.ashx",
+    "COPY_MOVE" : "/EasiShareMobile.asmx"
 };

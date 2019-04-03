@@ -1,9 +1,10 @@
-angular.module('easishare-plugin').controller("filesController", ["$scope","AuthService", "APIService", "$location", "$q", function($scope, AuthService, APIService, $location, $q){
+angular.module('easishare-plugin').controller("filesController", ["$scope","AuthService", "APIService", "SharedStore", "$location", "$q", function($scope, AuthService, APIService, SharedStore, $location, $q){
     var $ctrl = this;
 
     $ctrl.path = "";
     $ctrl.folderStack = [];
     $ctrl.selectedFiles = [];
+    $ctrl.fileLoadStatus = "Loading..";
 
     $ctrl.toggleFileSelect = function(file){
         file.isSelected = !file.isSelected;
@@ -12,12 +13,13 @@ angular.module('easishare-plugin').controller("filesController", ["$scope","Auth
         } else {
             $ctrl.selectedFiles = $ctrl.selectedFiles.filter(x=>x.fileUrl != file.fileUrl);
         }
-    }
+    };
 
     $ctrl.getFiles = function(){
         $scope.$emit("ShowLoader",{});
         APIService.getFileList($ctrl.path, AuthService.getStorageToken())
         .then(data=>{
+            $ctrl.fileLoadStatus = "Loading ...";
             if(data.ErrorMessage){
                 $location.path("/");
                 $scope.$emit("HideLoader",{});
@@ -25,9 +27,12 @@ angular.module('easishare-plugin').controller("filesController", ["$scope","Auth
                 return;
             }
             $ctrl.selectedFiles = [];
-            $ctrl.files = data.Result;
+            $ctrl.files = data.Result || [];
             $scope.$emit("HideLoader",{});
-        });
+            if(!$ctrl.files.length){
+                $ctrl.fileLoadStatus = "Folder is empty";
+            }
+        }); 
     };
 
     $ctrl.deleteAction = function(){
@@ -53,6 +58,7 @@ angular.module('easishare-plugin').controller("filesController", ["$scope","Auth
 
     $ctrl.createFolder = function(){
         $scope.$emit("ShowLoader",{});
+        $ctrl.fileLoadStatus = "Loading ...";
         var path = $ctrl.path;
         if(path){
             path+="/"
@@ -91,6 +97,7 @@ angular.module('easishare-plugin').controller("filesController", ["$scope","Auth
     };
 
     $ctrl.goToDirectory = function(file){
+        $ctrl.fileLoadStatus = "Loading ...";
         if(!file.isDirectory){
             $ctrl.downloadFile(file);
             return;
@@ -102,6 +109,7 @@ angular.module('easishare-plugin').controller("filesController", ["$scope","Auth
     };
 
     $ctrl.gotToPath = function($index){
+        $ctrl.fileLoadStatus = "Loading ...";
         if($index >= $ctrl.folderStack.length-1){
             return;
         }
@@ -210,9 +218,44 @@ angular.module('easishare-plugin').controller("filesController", ["$scope","Auth
             $scope.$emit("HideLoader",{});
         });
     });
+    
+    $scope.$on("copySelectedToPath", function(event, data){
+        console.log(data);
+        $scope.$emit("ShowLoader",{});
+        APIService.copyFiles($ctrl.path, data.destination, $ctrl.selectedFiles, AuthService.getStorageToken())
+        .then(data=>{
+            console.log(data);
+            if(data!='0;'){
+                alert( "Cannot copy here. " + data.split(";")[1]);
+                $scope.$emit("HideLoader",{});
+            } else {
+                $ctrl.getFiles();
+            }
+            $('#moveFilePopup').modal('hide');
+            
+        });
+        //validate path is different, validate file not present in destination
+    });
+
+    $scope.$on("moveSelectedToPath", function(event, data){
+        console.log(data);
+        $scope.$emit("ShowLoader",{});
+        APIService.moveFiles($ctrl.path, data.destination, $ctrl.selectedFiles, AuthService.getStorageToken())
+        .then(data=>{
+            console.log(data);
+            if(data!='0;'){
+                alert( "Cannot mover here. " + data.split(";")[1]);
+                $scope.$emit("HideLoader",{});
+            } else {
+                $ctrl.getFiles();
+            }
+            $('#moveFilePopup').modal('hide');
+        });
+        //validate path is different, validate file not present in destination
+    });
 
     (()=>{
         $ctrl.getFiles();
     })();
 
-}])
+}]);

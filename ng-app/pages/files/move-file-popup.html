@@ -29,7 +29,8 @@
                         </tr>
                     </thead> -->
                     <tbody>
-                        <tr ng-repeat="folder in $ctrl.folders" ng-click="$ctrl.selectFolder(folder)" >
+                        <tr ng-repeat="folder in $ctrl.folders" ng-click="$ctrl.goToDirectory(folder)">
+                            <!-- ng-click="$ctrl.selectFolder(folder)" -->
                             <!-- ng-click="$ctrl.toggleFolderSelect(folder)"  -->
                             <!-- <td class="grid-select-col" role="gridcell">
                                 <i class="fa fa-check fa-grid-select"></i>
@@ -46,15 +47,15 @@
                         
                         <tr ng-show="!$ctrl.folders.length">
                             <td></td>
-                            <td>No Folders</td>
+                            <td>{{$ctrl.loadStatus}}</td>
                         </tr>
                     </tbody>
                 </table>
                 
-                <span>
+                <!-- <span>
                     <label for="movePath">Destination :</label>
                     <span id="movePath">{{$ctrl.selectedPath||'/'}}</span>
-                </span>
+                </span> -->
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">
@@ -62,12 +63,12 @@
                     </i>
                     Cancel
                 </button>
-                <button type="button" class="btn btn-primary btn-sm" ng-click="$ctrl.save()">
+                <button type="button" class="btn btn-primary btn-sm" ng-click="$ctrl.copy()">
                     <!-- <i class="fa fa-envelope"></i> -->
                     <i class="far fa-copy"></i>
                     Copy Here
                 </button>
-                <button type="button" class="btn btn-primary btn-sm" ng-click="$ctrl.save()">
+                <button type="button" class="btn btn-primary btn-sm" ng-click="$ctrl.move()">
                     <i class="fas fa-hand-rock"></i>
                     Move Here
                 </button>
