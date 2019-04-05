@@ -254,6 +254,24 @@ angular.module('easishare-plugin').controller("filesController", ["$scope","Auth
         //validate path is different, validate file not present in destination
     });
 
+    $ctrl.clickToCopy = {
+        modalHeader: "",
+        value: "",
+        doCopy: function(id){
+            var element = document.getElementById(id);
+            element.select();
+            document.execCommand("copy");
+        },
+        showModal: function(){
+            $('#clickToCopyModal').modal('hide');
+        }
+    }
+
+    $ctrl.clickToCopy = function(id){
+        var element = document.getElementById
+        this.select()&&document.execCommand('copy');
+    };
+
     (()=>{
         $ctrl.getFiles();
     })();

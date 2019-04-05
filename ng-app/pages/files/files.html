@@ -125,11 +125,11 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">{{$ctrl.copyModalHeader}}</h4>
+                <h4 class="modal-title">{{$ctrl.clickToCopy.modalHeader}}</h4>
             </div>
             <div class="modal-body">
-                <input type="text" >
-                <button onclick="this.select()&&document.execCommand('copy');">Copy text</button>
+                <input type="text" id="clickToCopyInput" ng-model="$ctrl.clickToCopy.value">
+                <button ng-click="$ctrl.clickToCopy.doCopy('clickToCopyInput')">Copy text</button>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

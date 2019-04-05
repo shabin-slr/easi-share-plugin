@@ -27,9 +27,18 @@ angular.module('easishare-plugin').controller("authController", ["APIService", "
         .then(()=>{
             return updateShareToken(AuthService.getShareToken())
         })
-        .then((data)=>{
-            console.log(data);
-            storageLogin(AuthService.getShareToken())
+        .then(()=>{
+            return APIService.getDefaultSettings2(AuthService.getShareToken());
+        })
+        .then(data=>{
+            let storageId = data.match(/<StorageSpaceId>(.+?)<\/StorageSpaceId>/);
+            if(storageId && storageId.length >= 2){
+                return AuthService.setStorageId(storageId[1]);
+            }
+            throw "Invalid Login";
+        })
+        .then(()=>{
+            storageLogin(AuthService.getShareToken(), parseInt(AuthService.getStorageId()))
             .then(data=>{
                 let storageToken = data.Result;
                 if(!storageToken){
@@ -38,7 +47,7 @@ angular.module('easishare-plugin').controller("authController", ["APIService", "
                 }
                 AuthService.setStorageToken(storageToken);
                 $location.path("/files")
-            })
+            });
         }).catch(e=>{
             $scope.$emit("HideLoader",{});
             alert(e);
@@ -72,8 +81,8 @@ angular.module('easishare-plugin').controller("authController", ["APIService", "
         return APIService.getDeviceStatus(token);
     };
 
-    let storageLogin = function(esToken){
-        return APIService.storageLogin(esToken);
+    let storageLogin = function(esToken, storageId){
+        return APIService.storageLogin(esToken, storageId);
     }
 
 }]);

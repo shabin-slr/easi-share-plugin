@@ -42,13 +42,22 @@ angular.module('easishare-plugin').service("APIService", ["$http", "$soap", func
         );
     };
 
-    self.storageLogin = function(esToken){
+    self.getDefaultSettings2 = function(token){
+        return makeSoapRequest(
+            SOAP_END_POINTS.DEFAULT_SETTINGS,
+            "GetDefaultSettings2",{
+                Token:token
+            }
+        );
+    };
+
+    self.storageLogin = function(esToken, storageId){
         return makeSoapRequest(
             SOAP_END_POINTS.STORAGE,
             "Login",{
                 "ESToken": esToken,
                 "Options": {
-                    "StorageId": APP_CONFIG.soap.storageId
+                    "StorageId": storageId//APP_CONFIG.soap.storageId
                 }
             }
         );

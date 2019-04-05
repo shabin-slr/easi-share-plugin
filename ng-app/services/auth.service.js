@@ -29,6 +29,14 @@ angular.module('easishare-plugin').service("AuthService", ["$q", function($q){
         return localStorage.getItem("storageToken");
     };
 
+    self.setStorageId = function(token){
+        localStorage.setItem("storageId", token);
+    };
+
+    self.getStorageId = function(){
+        return localStorage.getItem("storageId");
+    };
+
     self.validateTokens = function(){
         if(!self.getRestToken() || !self.getShareToken() || !self.getStorageToken()){
             return $q.reject();
