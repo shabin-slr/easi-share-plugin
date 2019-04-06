@@ -42,11 +42,13 @@ angular.module('easishare-plugin').service("APIService", ["$http", "$soap", func
         );
     };
 
-    self.getDefaultSettings2 = function(token){
+    self.getPolicy = function(token){
         return makeSoapRequest(
-            SOAP_END_POINTS.DEFAULT_SETTINGS,
-            "GetDefaultSettings2",{
-                Token:token
+            SOAP_END_POINTS.SHARE,
+            "GetPolicy",{
+                "Options":{
+                    Token:token
+                }
             }
         );
     };

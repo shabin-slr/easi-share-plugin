@@ -28,14 +28,18 @@ angular.module('easishare-plugin').controller("authController", ["APIService", "
             return updateShareToken(AuthService.getShareToken())
         })
         .then(()=>{
-            return APIService.getDefaultSettings2(AuthService.getShareToken());
+            return APIService.getPolicy(AuthService.getShareToken());
         })
         .then(data=>{
-            let storageId = data.match(/<StorageSpaceId>(.+?)<\/StorageSpaceId>/);
+            if(data.Result && data.Result.length && data.Result[2].length && data.Result[2][0].Id){
+                return AuthService.setStorageId(data.Result[2][0].Id);
+            }
+            throw "Invalid Login";
+            /* let storageId = data.match(/<StorageSpaceId>(.+?)<\/StorageSpaceId>/);
             if(storageId && storageId.length >= 2){
                 return AuthService.setStorageId(storageId[1]);
             }
-            throw "Invalid Login";
+            throw "Invalid Login"; */
         })
         .then(()=>{
             storageLogin(AuthService.getShareToken(), parseInt(AuthService.getStorageId()))
@@ -83,6 +87,6 @@ angular.module('easishare-plugin').controller("authController", ["APIService", "
 
     let storageLogin = function(esToken, storageId){
         return APIService.storageLogin(esToken, storageId);
-    }
+    };
 
 }]);
