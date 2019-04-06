@@ -120,8 +120,8 @@
 <ng-include src="'./ng-app/pages/files/share-popup.html'"></ng-include>
 <ng-include src="'./ng-app/pages/files/move-file-popup.html'"></ng-include>
 
-<div id="clickToCopyModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
+<div id="clickToCopyModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
         
         <div class="modal-content">
             <div class="modal-header">
@@ -129,8 +129,8 @@
                 <h4 class="modal-title">{{$ctrl.clickToCopy.modalHeader}}</h4>
             </div>
             <div class="modal-body">
-                <input type="text" id="clickToCopyInput" ng-model="$ctrl.clickToCopy.value">
-                <button ng-click="$ctrl.clickToCopy.doCopy('clickToCopyInput')">Copy text</button>
+                <input class="click-to-copy" type="text" id="clickToCopyInput" ng-model="$ctrl.clickToCopy.value">
+                <button class = "btn btn-default btn-sm" ng-click="$ctrl.clickToCopy.doCopy('clickToCopyInput');$ctrl.clickToCopy.clicked=true;">{{$ctrl.clickToCopy.clicked?'Copied':'Copy text'}}</button>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

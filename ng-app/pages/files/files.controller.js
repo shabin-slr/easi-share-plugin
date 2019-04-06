@@ -210,8 +210,11 @@ angular.module('easishare-plugin').controller("filesController", ["$scope","Auth
         .then(data=>{
             console.log(data);
             if(data.SingleLinks && data.SingleLinks.length){
-                alert(data.SingleLinks[0]);
+                // alert(data.SingleLinks[0]);
                 // @TODO, show this in a click copy popup
+                $ctrl.clickToCopy.modalHeader = "Share URL";
+                $ctrl.clickToCopy.value = data.SingleLinks[0];
+                $ctrl.clickToCopy.showModal();
             } else {
                 alert("An error occurred, please try again later");
             }
@@ -262,18 +265,19 @@ angular.module('easishare-plugin').controller("filesController", ["$scope","Auth
         value: "",
         doCopy: function(id){
             var element = document.getElementById(id);
+            element.focus();    
             element.select();
             document.execCommand("copy");
         },
         showModal: function(){
-            $('#clickToCopyModal').modal('hide');
+            $('#clickToCopyModal').modal('show');
         }
     }
-
+/* 
     $ctrl.clickToCopy = function(id){
-        var element = document.getElementById
+        var element = document.getElementById(id);
         this.select()&&document.execCommand('copy');
-    };
+    }; */
 
     var getFileIcon = function(file){
         if(file.isDirectory){

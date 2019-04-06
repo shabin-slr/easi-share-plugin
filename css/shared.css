@@ -6455,7 +6455,7 @@ button.close {
 
 @media(max-width:700px) {
     .modal {
-        right: auto;
+        /* right: auto; */
         overflow: auto
     }
     .modal-open {
@@ -13651,4 +13651,10 @@ iframe {
 .horizontal-scroll {
     overflow-x: scroll;
     white-space: nowrap;
+}
+
+.click-to-copy {
+    border: 1px solid rgba(137, 137, 137, .5);
+    border-radius: 4px;
+    padding: 6px 12px;
 }
