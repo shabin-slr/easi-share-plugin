@@ -28,6 +28,9 @@ angular.module('easishare-plugin').controller("filesController", ["$scope","Auth
             }
             $ctrl.selectedFiles = [];
             $ctrl.files = data.Result || [];
+            $ctrl.files.forEach(file=>{
+                file.iconClass = getFileIcon(file);
+            })
             $scope.$emit("HideLoader",{});
             if(!$ctrl.files.length){
                 $ctrl.fileLoadStatus = "Folder is empty";
@@ -270,6 +273,83 @@ angular.module('easishare-plugin').controller("filesController", ["$scope","Auth
     $ctrl.clickToCopy = function(id){
         var element = document.getElementById
         this.select()&&document.execCommand('copy');
+    };
+
+    var getFileIcon = function(file){
+        if(file.isDirectory){
+            return "fa fa-folder-o fa-lg";
+        }
+        var type = null;
+        let fileExtension = file.fileName.split('.').pop();
+        switch (fileExtension){
+            case "txt":
+            case "log":
+            type = "fa fa-file-text-o fa-lg";
+            break;
+            case "zip":
+            case "7z":
+            type = "fa fa-file-zip-o fa-lg";
+            break;
+            case "doc":
+            case "dot":
+            case "docx":
+            case "dotx":
+            type = "fa fa-file-word-o fa-lg";
+            break;
+            case "xls":
+            case "xlt":
+            case "xltx":
+            case "xlsx":
+            type = "fa fa-file-excel-o fa-lg";
+            break;
+            case "ppt":
+            case "pptx":
+            type = "fa fa-file-powerpoint-o fa-lg";
+            break;
+            case "pdf":
+            type = "fa fa-file-pdf-o fa-lg";
+            break;
+            case "png":
+            case "jpg":
+            case "jpeg":
+            case "gif":
+            case "bmp":
+            case "img":
+            case "svg":
+            case "psd":
+            case "ico":
+            type = "fa fa-file-image-o fa-lg";
+            break;
+            case "mp3":
+            case "m3u":
+            case "wav":
+            case "flac":
+            case "wma":
+            case "aac":
+            case "mid":
+            type = "fa fa-file-audio-o fa-lg";
+            break;
+            case "mov":
+            case "3gp":
+            case "avi":
+            case "flv":
+            case "mpeg":
+            case "mpg":
+            case "mkv":
+            case "wmv":
+            case "mp4":
+            type = "fa fa-file-video-o fa-lg";
+            break;
+            case "cs":
+            case "js":
+            case "css":
+            case "java":
+            type = "fa fa-file-code-o fa-lg";
+            break;
+            default:
+            type = "fa fa-file-o fa-lg";
+        }
+        return type;
     };
 
     (()=>{

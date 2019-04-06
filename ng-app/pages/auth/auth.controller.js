@@ -72,21 +72,21 @@ angular.module('easishare-plugin').controller("authController", ["APIService", "
             // invalid login
         }); */
     }
-
+    
     let restLogin = function(userName, password){
         return APIService.restLogin(userName, password);
     };
-
+    
     let shareLogin = function(userName, password){
         return APIService.shareLogin(userName, password);
     };
-
+    
     let updateShareToken = function(token){
         return APIService.getDeviceStatus(token);
     };
-
+    
     let storageLogin = function(esToken, storageId){
         return APIService.storageLogin(esToken, storageId);
     };
-
+    
 }]);

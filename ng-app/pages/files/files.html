@@ -101,7 +101,8 @@
                 <td class="closer-left" role="gridcell">
                     <span title="">
                         <i class="fa fa-check fa-grid-select"></i>
-                        <i class="fa fa-lg" ng-class="{'fa-folder-o': file.isDirectory, 'fa-file-image-o': !file.isDirectory}"></i>
+                        <i ng-class="file.iconClass"></i>
+                        <!-- ng-class="{'fa-folder-o': file.isDirectory, 'fa-file-image-o': !file.isDirectory}" -->
                     </span>
                     <a ng-show="!file.isRenaming" class="item-name" ng-click="$ctrl.goToDirectory(file)" ng-class="{'pointer': file.isDirectory}">{{file.fileName}}</a>
                     <input ng-show="file.isRenaming" class="item-name form-control" type="text" ng-model="file.editedName" style="display: inline" on-enter-press="$ctrl.updateFileName(file)"/>
