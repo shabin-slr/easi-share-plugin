@@ -8,10 +8,8 @@ const APP_CONFIG = {
         soapBaseUrl: "https://demo2.easishare.com/esws",
         deviceID: "1234",
         deviceType: "API",
-        appVersion: "1.0",
-        storageId: "552"
+        appVersion: "1.0"
     }
-
 };
 
 const REST_END_POINTS = {

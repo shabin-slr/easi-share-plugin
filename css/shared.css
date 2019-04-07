@@ -11739,7 +11739,7 @@ input.item-name {
 
 .breadcrumb {
     white-space: nowrap;
-    overflow: hidden
+    overflow: auto;
 }
 
 .main-grid {
