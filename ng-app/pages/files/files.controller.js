@@ -11,14 +11,14 @@ angular.module('easishare-plugin').controller("filesController", ["$scope","Auth
         if(file.isSelected){
             $ctrl.selectedFiles.push(file);
         } else {
-            $ctrl.selectedFiles = $ctrl.selectedFiles.filter(x=>x.fileUrl != file.fileUrl);
+            $ctrl.selectedFiles = $ctrl.selectedFiles.filter(function(x){ return x.fileUrl != file.fileUrl});
         }
     };
 
     $ctrl.getFiles = function(){
         $scope.$emit("ShowLoader",{});
         APIService.getFileList($ctrl.path, AuthService.getStorageToken())
-        .then(data=>{
+        .then(function(data){
             $ctrl.fileLoadStatus = "Loading ...";
             if(data.ErrorMessage){
                 $location.path("/");
@@ -28,7 +28,7 @@ angular.module('easishare-plugin').controller("filesController", ["$scope","Auth
             }
             $ctrl.selectedFiles = [];
             $ctrl.files = data.Result || [];
-            $ctrl.files.forEach(file=>{
+            $ctrl.files.forEach(function(file){
                 file.iconClass = getFileIcon(file);
             })
             $scope.$emit("HideLoader",{});
@@ -45,15 +45,15 @@ angular.module('easishare-plugin').controller("filesController", ["$scope","Auth
             path+="/"
         }
         var promises = [];
-        $ctrl.selectedFiles.forEach(file=>{
+        $ctrl.selectedFiles.forEach(function(file){
             var deletePath = path + file.fileName;
             var deleteAction = file.isDirectory?APIService.deleteFolder:APIService.deleteFile;
             promises.push(deleteAction(deletePath, AuthService.getStorageToken()));
         });
         $q.all(promises)
-        .then(data=>{
+        .then(function(data){
             $ctrl.getFiles();
-        }).catch(e=>{
+        }).catch(function(e){
             console.error(e);
             $ctrl.getFiles();
         });
@@ -69,7 +69,7 @@ angular.module('easishare-plugin').controller("filesController", ["$scope","Auth
         path+=$ctrl.newFolderName;
 
         APIService.createFolder(path, AuthService.getStorageToken())
-        .then(data=>{
+        .then(function(data){
             $ctrl.showNewFolderInput = false
             $ctrl.newFolderName = "";
             $ctrl.getFiles();
@@ -88,7 +88,7 @@ angular.module('easishare-plugin').controller("filesController", ["$scope","Auth
             path+="/"
         }
         APIService.renameFile(path + file.fileName, path + file.editedName, AuthService.getStorageToken())
-        .then(data=>{
+        .then(function(data){
             file.isRenaming = false;
             $ctrl.getFiles();
         });
@@ -167,7 +167,7 @@ angular.module('easishare-plugin').controller("filesController", ["$scope","Auth
             }
             $scope.$emit("ShowLoader",{});
             APIService.uploadFile(fd, params)
-            .then(data=>{
+            .then(function(data){
                 $ctrl.getFiles();
             });
         }
@@ -207,7 +207,7 @@ angular.module('easishare-plugin').controller("filesController", ["$scope","Auth
         console.log(data);
         $scope.$emit("ShowLoader",{});
         APIService.share($ctrl.selectedFiles, data.recipient, data.shareSettings, AuthService.getShareToken())
-        .then(data=>{
+        .then(function(data){
             console.log(data);
             if(data.SingleLinks && data.SingleLinks.length){
                 // alert(data.SingleLinks[0]);
@@ -219,7 +219,7 @@ angular.module('easishare-plugin').controller("filesController", ["$scope","Auth
                 alert("An error occurred, please try again later");
             }
             $scope.$emit("HideLoader",{});
-        }).catch(e=>{
+        }).catch(function(e){
             console.error(e);
             $scope.$emit("HideLoader",{});
         });
@@ -229,7 +229,7 @@ angular.module('easishare-plugin').controller("filesController", ["$scope","Auth
         console.log(data);
         $scope.$emit("ShowLoader",{});
         APIService.copyFiles($ctrl.path, data.destination, $ctrl.selectedFiles, AuthService.getStorageToken())
-        .then(data=>{
+        .then(function(data){
             console.log(data);
             if(data!='0;'){
                 alert( "Cannot copy here. " + data.split(";")[1]);
@@ -247,7 +247,7 @@ angular.module('easishare-plugin').controller("filesController", ["$scope","Auth
         console.log(data);
         $scope.$emit("ShowLoader",{});
         APIService.moveFiles($ctrl.path, data.destination, $ctrl.selectedFiles, AuthService.getStorageToken())
-        .then(data=>{
+        .then(function(data){
             console.log(data);
             if(data!='0;'){
                 alert( "Cannot mover here. " + data.split(";")[1]);
@@ -356,7 +356,7 @@ angular.module('easishare-plugin').controller("filesController", ["$scope","Auth
         return type;
     };
 
-    (()=>{
+    (function(){
         $ctrl.getFiles();
     })();
 

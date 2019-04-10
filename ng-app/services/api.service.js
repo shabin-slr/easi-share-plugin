@@ -149,7 +149,7 @@ angular.module('easishare-plugin').service("APIService", ["$http", "$soap", func
             SOAP_END_POINTS.COPY_MOVE,
             "CopyFiles",{
                 "Token": token,
-                "Files": files.map(x=>x.fileName),
+                "Files": files.map(function(x){return x.fileName}),
                 "SourcePath": sourcePath,
                 "DestinationPath": destinationPath
             }
@@ -161,7 +161,7 @@ angular.module('easishare-plugin').service("APIService", ["$http", "$soap", func
             SOAP_END_POINTS.COPY_MOVE,
             "MoveFiles",{
                 "Token": token,
-                "Files": files.map(x=>x.fileName),
+                "Files": files.map(function(x){ return x.fileName}),
                 "SourcePath": sourcePath,
                 "DestinationPath": destinationPath
             }
@@ -186,7 +186,7 @@ angular.module('easishare-plugin').service("APIService", ["$http", "$soap", func
         }); */
         let requestBody = {
             "Options":{
-                "Documents": files.map(x=>{
+                "Documents": files.map(function(x){
                     return {
                         "ShareFileInfo": {
                             "DocumentUrl": x.fileUrl,

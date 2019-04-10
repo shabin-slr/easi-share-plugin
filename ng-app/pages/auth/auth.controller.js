@@ -5,7 +5,7 @@ angular.module('easishare-plugin').controller("authController", ["APIService", "
     $ctrl.doLogin = function(){
         $scope.$emit("ShowLoader",{});
         restLogin($ctrl.userName, $ctrl.password)
-        .then(data=>{
+        .then(function(data){
             let restToken = data.data.Token;
             if(!restToken){
                 $scope.$emit("HideLoader",{});
@@ -14,8 +14,8 @@ angular.module('easishare-plugin').controller("authController", ["APIService", "
             AuthService.setRestToken(restToken);
             return restToken;
         })
-        .then(()=>shareLogin($ctrl.userName, $ctrl.password))
-        .then(data=>{
+        .then(function(){ return shareLogin($ctrl.userName, $ctrl.password)})
+        .then(function(data){
             let shareToken = data.Result;
             if(!shareToken || typeof(shareToken)!="string"){
                 $scope.$emit("HideLoader",{});
@@ -24,13 +24,13 @@ angular.module('easishare-plugin').controller("authController", ["APIService", "
             AuthService.setShareToken(shareToken);
             return shareToken;
         })
-        .then(()=>{
+        .then(function(){
             return updateShareToken(AuthService.getShareToken())
         })
-        .then(()=>{
+        .then(function(){
             return APIService.getPolicy(AuthService.getShareToken());
         })
-        .then(data=>{
+        .then(function(data){
             if(data.Result && data.Result.length && data.Result[2].length && data.Result[2][0].Id){
                 return AuthService.setStorageId(data.Result[2][0].Id);
             }
@@ -41,9 +41,9 @@ angular.module('easishare-plugin').controller("authController", ["APIService", "
             }
             throw "Invalid Login"; */
         })
-        .then(()=>{
+        .then(function(){
             storageLogin(AuthService.getShareToken(), parseInt(AuthService.getStorageId()))
-            .then(data=>{
+            .then(function(data){
                 let storageToken = data.Result;
                 if(!storageToken){
                     $scope.$emit("HideLoader",{});
@@ -52,7 +52,7 @@ angular.module('easishare-plugin').controller("authController", ["APIService", "
                 AuthService.setStorageToken(storageToken);
                 $location.path("/files")
             });
-        }).catch(e=>{
+        }).catch(function(e){
             $scope.$emit("HideLoader",{});
             alert(e);
         });

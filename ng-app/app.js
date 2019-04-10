@@ -13,9 +13,9 @@ angular.module('easishare-plugin').controller("AppController", ["$scope", "APISe
         // check if logged in
         // if not, redirect to login page
         AuthService.validateTokens()
-        .then(()=>{
+        .then(function(){
             $location.path("/files");  
-        }, err=>{
+        }, function(err){
             $mainCtrl.signOut();
         });
     };

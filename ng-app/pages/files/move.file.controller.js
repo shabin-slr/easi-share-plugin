@@ -11,7 +11,7 @@ angular.module("easishare-plugin").controller("MoveFileController", ["$scope", "
         $scope.$emit("ShowLoader",{});
         $ctrl.loadStatus = "Getting Folders.."
         APIService.getFileList($ctrl.path, AuthService.getStorageToken())
-        .then(data=>{
+        .then(function(data){
             console.log(data);
             if(data.ErrorMessage){
                 $('.modal').modal('hide');
@@ -19,7 +19,7 @@ angular.module("easishare-plugin").controller("MoveFileController", ["$scope", "
                 return;
             }
             if(!!data.Result){
-                $ctrl.folders = data.Result.filter(x=>x.isDirectory);
+                $ctrl.folders = data.Result.filter(function(x){ return x.isDirectory});
             }
             if(!$ctrl.folders.length){
                 $ctrl.loadStatus = "Empty";
@@ -64,7 +64,7 @@ angular.module("easishare-plugin").controller("MoveFileController", ["$scope", "
         } */
         path = path + $ctrl.folderStack.join("/") + "/" + folder.fileName;
         $ctrl.selectedPath = path;
-        $ctrl.folders.forEach(x=>x.isSelected = false);
+        $ctrl.folders.forEach(function(x){ return x.isSelected = false});
         folder.isSelected = true;
     };
 
@@ -80,6 +80,6 @@ angular.module("easishare-plugin").controller("MoveFileController", ["$scope", "
         });
     };
 
-    (()=>$ctrl.getFolders())();
+    (function(){$ctrl.getFolders()})();
 
 }]);
